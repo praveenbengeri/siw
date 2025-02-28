@@ -39,7 +39,7 @@
 
      oktaSignIn.on("afterRender", (function(ctx) {
                             document.getElementById("messageBox").innerHTML += "<br/> Form : " + ctx.formName;
-                        });
+                        }));
 
       oktaSignIn.authClient.token.getUserInfo().then(function(user) {
         document.getElementById("messageBox").innerHTML = "Hello, " + user.email + "! You are *still* logged in! :)";
