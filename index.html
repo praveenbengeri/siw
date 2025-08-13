@@ -64,7 +64,8 @@
 
       function logout() {
         oktaSignIn.authClient.signOut();
-        location.reload();
+        document.getElementById("messageBox").innerHTML += oktaSignIn.authClient.token;
+        //location.reload();
       }
     </script>
   </body>
