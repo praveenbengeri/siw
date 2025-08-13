@@ -16,9 +16,9 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="text-center">Simple Web Page</h1>
+      <h1 class="text-center">Praveen's SIW Page</h1>
       <div id="messageBox" class="jumbotron">
-        You are not logged in.
+        Debug messages...
       </div>
       <!-- where the sign-in form appears -->
       <div id="okta-login-container"></div>
@@ -38,7 +38,7 @@
      const oktaSignIn = new OktaSignIn(oktaConfig);
 
      oktaSignIn.on("afterRender", (function(ctx) {
-                            document.getElementById("messageBox").innerHTML += "<br/> Form : " + ctx.formName;
+                            document.getElementById("messageBox").innerHTML += "<br/> ctx.formName : " + ctx.formName;
                         }));
 
       oktaSignIn.authClient.token.getUserInfo().then(function(user) {
