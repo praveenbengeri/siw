@@ -27,21 +27,6 @@
     <script type="text/javascript">
       var oktaConfig = {
         // Enable or disable widget functionality with the following options. Some of these features require additional configuration in your Okta admin settings. Detailed information can be found here: https://github.com/okta/okta-signin-widget#okta-sign-in-widget
-        idpDisplay: "PRIMARY",                        // Try: [PRIMARY, SECONDARY] Changes button display order
-        idps: [
-            {type: '', id: '0oaq9prqd2K1FYdnI1d7'}
-        ],
-        i18n: {
-            //Overrides default text when using English. Override other languages by adding additional sections.
-            'en': {
-                'social-auth-general-idp-button': 'Click here in case part of NSC',
-                'customauth.sign.in.with.label': 'Click here in case part of NSC',
-                'unlockaccount': 'Unlock Account',
-                'primaryauth.username.placeholder': 'USERID',
-                'forgotpassword': 'Forgot passsword'
-
-            }
-        },
         issuer: "https://praveenben.oktapreview.com/oauth2/default",
         redirectUri: 'https://praveenbengeri.github.io/siw/',
         clientId: "0oako46zliZkRzzwH1d7",
@@ -52,6 +37,20 @@
       var searchParams = new URL(window.location.href).searchParams;
       oktaConfig.otp = searchParams.get('otp');
       oktaConfig.state = searchParams.get('state');
+
+      config.idps = [{ text: '', id: '0oaq9prqd2K1FYdnI1d7' }];
+
+      config.idpDisplay = "PRIMARY";
+
+      config.i18n = {
+          //Overrides default text when using English. Override other languages by adding additional sections.
+          'en': {
+              'customauth.sign.in.with.label': 'Click here in case part of NSC{0}',
+              'unlockaccount': 'Unlock Account',
+              'primaryauth.username.placeholder': 'USERID',
+              'forgotpassword': 'Forgot passsword'
+          }
+      };
 
      const oktaSignIn = new OktaSignIn(oktaConfig);
 
