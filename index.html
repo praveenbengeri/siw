@@ -38,11 +38,11 @@
       oktaConfig.otp = searchParams.get('otp');
       oktaConfig.state = searchParams.get('state');
 
-      config.idps = [{ text: '', id: '0oaq9prqd2K1FYdnI1d7' }];
+      oktaConfig.idps = [{ text: '', id: '0oaq9prqd2K1FYdnI1d7' }];
 
-      config.idpDisplay = "PRIMARY";
+      oktaConfig.idpDisplay = "PRIMARY";
 
-      config.i18n = {
+      oktaConfig.i18n = {
           //Overrides default text when using English. Override other languages by adding additional sections.
           'en': {
               'customauth.sign.in.with.label': 'Click here in case part of NSC{0}',
