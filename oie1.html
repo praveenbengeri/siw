@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Simple Web Page</title>
+    <style>
+      h1 {
+        margin: 2em 0;
+      }
+    </style>
+    <!-- widget stuff here -->
+    <script src="https://global.oktacdn.com/okta-signin-widget/7.29.0/js/okta-sign-in.min.js" type="text/javascript"></script>
+    <link href="https://global.oktacdn.com/okta-signin-widget/7.29.0/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Praveen's SIW Page</h1>
+      <div id="messageBox" class="jumbotron">
+        Debug messages...
+      </div>
+      <!-- where the sign-in form appears -->
+      <div id="okta-login-container"></div>
+      <button id="logout" class="button" onclick="logout()" style="display: none">Logout</button>
+    </div>
+    <script type="text/javascript">
+      var oktaConfig = {
+        // Enable or disable widget functionality with the following options. Some of these features require additional configuration in your Okta admin settings. Detailed information can be found here: https://github.com/okta/okta-signin-widget#okta-sign-in-widget
+        issuer: "https://oie1.okta1.com/oauth2/default",
+        redirectUri: 'https://praveenbengeri.github.io/siw/oie1.html',
+        clientId: "0oaf5ea94dh1wNeHh0g4",
+        post_logout_redirect_uris: 'https://praveenbengeri.github.io/siw/logout.html',
+        backToSignInLink: 'https://praveenbengeri.github.io/siw/logout.html'
+      }
+      // Search for URL Parameters to see if a user is being routed to the application to recover password
+      var searchParams = new URL(window.location.href).searchParams;
+      oktaConfig.otp = searchParams.get('otp');
+      oktaConfig.state = searchParams.get('state');
+
+      oktaConfig.idps = [{ text: 'Microsoft', id: '0oadwrwUawGXCT5bV0g4' }, { text: 'Google', id: '0oaf3shUWlnEtKPJ40g4' }];
+
+      oktaConfig.idpDisplay = "PRIMARY";
+
+      oktaConfig.i18n = {
+          //Overrides default text when using English. Override other languages by adding additional sections.
+          'en': {
+              'customauth.sign.in.with.label': 'Click here in case part of NSC{0}',
+              'unlockaccount': 'Unlock Account',
+              'primaryauth.username.placeholder': 'USERID',
+              'forgotpassword': 'Forgot passsword'
+          }
+      };
+
+     const oktaSignIn = new OktaSignIn(oktaConfig);
+
+     oktaSignIn.on("afterRender", (function(ctx) {
+                            document.getElementById("messageBox").innerHTML += "<br/> ctx.formName : " + ctx.formName;
+                        }));
+
+      oktaSignIn.authClient.token.getUserInfo().then(function(user) {
+        document.getElementById("messageBox").innerHTML = "Hello, " + user.email + "! You are *still* logged in! :)";
+        document.getElementById("logout").style.display = 'block';
+      }, function(error) {
+        oktaSignIn.showSignInToGetTokens({
+          el: '#okta-login-container'
+        }).then(function(tokens) {
+          oktaSignIn.authClient.tokenManager.setTokens(tokens);
+          oktaSignIn.remove();
+
+          const idToken = tokens.idToken;
+          document.getElementById("messageBox").innerHTML = "Hello, " + idToken.claims.email + "! You just logged in! :)";
+          document.getElementById("logout").style.display = 'block';
+
+        }).catch(function(err) {
+          console.error(err);
+        });
+      });
+
+      function logout() {
+        oktaSignIn.authClient.signOut();
+        document.getElementById("messageBox").innerHTML += oktaSignIn.authClient.token;
+        //location.reload();
+      }
+    </script>
+  </body>
+</html>
