@@ -37,7 +37,7 @@
       var searchParams = new URL(window.location.href).searchParams;
       oktaConfig.otp = searchParams.get('otp');
       oktaConfig.state = searchParams.get('state');
-
+/*
       oktaConfig.idps = [{ text: '', id: '0oaq9prqd2K1FYdnI1d7' }];
 
       oktaConfig.idpDisplay = "PRIMARY";
@@ -51,7 +51,7 @@
               'forgotpassword': 'Forgot passsword'
           }
       };
-
+*/
      const oktaSignIn = new OktaSignIn(oktaConfig);
 
      oktaSignIn.on("afterRender", (function(ctx) {
