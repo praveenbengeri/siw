@@ -37,6 +37,7 @@
       var searchParams = new URL(window.location.href).searchParams;
       oktaConfig.otp = searchParams.get('otp');
       oktaConfig.state = searchParams.get('state');
+      oktaConfig.idpDisplay = "PRIMARY";
 /*
       oktaConfig.idps = [{ text: '', id: '0oaq9prqd2K1FYdnI1d7' }];
 
